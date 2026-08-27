@@ -23,7 +23,7 @@ jobs:
 
       # 3. Gradle ready karo
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x android/gradlew
 
       # 4. APK banane ka command
       - name: Build Debug APK
