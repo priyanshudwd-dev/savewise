@@ -15,22 +15,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Flutter latest version use karo (tumhara wala)
+      # 2. Tumhara latest Flutter use karo (latest = sabse naye wala)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 'latest'
           channel: 'stable'
 
-      # 3. Gradle executable banao
+      # 3. Gradle ready karo
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 4. APK build karo
+      # 4. APK banane ka command
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      # 5. APK save karo download ke liye
+      # 5. APK download ke liye save karo
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
