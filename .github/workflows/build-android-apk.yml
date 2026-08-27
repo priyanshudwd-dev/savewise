@@ -1,5 +1,5 @@
 name: Build Debug APK
-
+run: flutter build apk --debug
 on:
   push:
     branches: [main]
