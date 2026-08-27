@@ -15,6 +15,7 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
@@ -32,11 +33,12 @@ subprojects {
         }
     }
 }
+
 subprojects {
     afterEvaluate {
         if (project.hasProperty("android")) {
-            val android = project.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
-            android?.compileSdkVersion(36)
+            val androidObj = project.extensions.findByName("android")
+            androidObj?.javaClass?.methods?.find { it.name == "compileSdkVersion" && it.parameterTypes.size == 1 }?.invoke(androidObj, 36)
         }
     }
 }
