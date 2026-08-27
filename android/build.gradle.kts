@@ -35,10 +35,18 @@ subprojects {
 }
 
 subprojects {
-    afterEvaluate {
-        if (project.extensions.findByName("android") != null) {
-            val android = project.extensions.findByName("android")
-            android?.javaClass?.getMethod("compileSdkVersion", Int::class.javaPrimitiveType)?.invoke(android, 36)
+    val applySdkFix = {
+        val androidObj = project.extensions.findByName("android")
+        if (androidObj != null) {
+            try {
+                androidObj.javaClass.getMethod("compileSdkVersion", Int::class.javaPrimitiveType)?.invoke(androidObj, 36)
+            } catch (_: Exception) {}
         }
+    }
+
+    if (project.state.executed) {
+        applySdkFix()
+    } else {
+        project.afterEvaluate { applySdkFix() }
     }
 }
