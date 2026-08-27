@@ -24,11 +24,11 @@ tasks.register<Delete>("clean") {
 }
 
 subprojects {
-    afterEvaluate {
-        if (project.plugins.hasPlugin("com.android.application") ||
-            project.plugins.hasPlugin("com.android.library")) {
-            val android = project.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
-            android?.compileSdkVersion = "android-36"
+    project.configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "androidx.lifecycle") {
+                useVersion("2.7.0")
+            }
         }
     }
 }
