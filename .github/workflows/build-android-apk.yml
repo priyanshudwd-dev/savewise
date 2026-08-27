@@ -1,37 +1,38 @@
-name: Build Debug APK
-run: flutter build apk --debug
+name: Build Android APK
+
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Apna code le lo
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Tumhara latest Flutter use karo (latest = sabse naye wala)
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-      # 3. Gradle ready karo
-      - name: Grant execute permission for gradlew
-        run: chmod +x android/gradlew
+      - name: Install dependencies
+        run: flutter pub get
 
-      # 4. APK banane ka command
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: flutter build apk --debug
 
-      # 5. APK download ke liye save karo
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
