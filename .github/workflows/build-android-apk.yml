@@ -11,26 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Get your code from GitHub
+      # 1. Apna code le lo
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Install Java (your app needs Java)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      # 2. Flutter latest version use karo (tumhara wala)
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          flutter-version: 'latest'
+          channel: 'stable'
 
-      # 3. Make the build tool ready
+      # 3. Gradle executable banao
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 4. Build your app (this is the magic step)
+      # 4. APK build karo
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      # 5. Save the APK so you can download it
+      # 5. APK save karo download ke liye
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
