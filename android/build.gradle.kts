@@ -36,9 +36,9 @@ subprojects {
 
 subprojects {
     afterEvaluate {
-        if (project.hasProperty("android")) {
-            val androidObj = project.extensions.findByName("android")
-            androidObj?.javaClass?.methods?.find { it.name == "compileSdkVersion" && it.parameterTypes.size == 1 }?.invoke(androidObj, 36)
+        if (project.extensions.findByName("android") != null) {
+            val android = project.extensions.findByName("android")
+            android?.javaClass?.getMethod("compileSdkVersion", Int::class.javaPrimitiveType)?.invoke(android, 36)
         }
     }
 }
